@@ -31,8 +31,10 @@ class ImageUploadController extends Controller
             'image_location' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         
-        $input['image'] = time().'.'.$request->image->getClientOriginalExtension();
-        $request->image->move(public_path('images'), $input['image']);
+        $name = preg_replace("/[^a-zA-Z0-9]+/", "", $request->image_title);
+        $time = preg_replace("/[^a-zA-Z0-9]+/", "", now()->toDateTimeString());
+
+        $image_location = $name.'_'.$time.'.'.$request->image_location->extension();
 
         $request->image_location->move(public_path('images'), $image_location);
 

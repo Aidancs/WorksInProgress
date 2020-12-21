@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ImageGalleryController;
 use App\Http\Controllers\ImageUploadController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,8 +24,12 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::get('image-upload', [ ImageUploadController::class, 'imageUpload' ])->name('image.upload');
-
 Route::post('image-upload', [ ImageUploadController::class, 'imageUploadPost' ])->middleware(['auth'])->name('image.upload.post');
+
+Route::get('image-gallery', [ ImageGalleryController::class, 'index' ]);
+Route::post('image-gallery', [ ImageGalleryController::class, 'upload' ]);
+Route::delete('image-gallery/{id}', [ ImageGalleryController::class, 'destroy' ]);
+
 
 
 require __DIR__.'/auth.php';
